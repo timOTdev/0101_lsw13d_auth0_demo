@@ -46,6 +46,9 @@ class App extends Component {
     if (this.isAuthenticated()) {
       return (
         <Container className="my-5 p-5">
+          <div type="button" onClick={this.logout}>
+            Log Out
+          </div>
           <h1 className="header">SMURF VILLAGE</h1>
           <SmurfList />
           <SmurfForm />
@@ -69,6 +72,12 @@ class App extends Component {
     // Access Token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_at');
+    window.location.reload();
   }
 
   componentDidMount() {
