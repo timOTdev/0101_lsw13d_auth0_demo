@@ -43,22 +43,39 @@ webAuth.parseHash((err, authResult) => {
 class App extends Component {
   render() {
     document.body.style.background = "#88CCFF";
-    return (
-      <Container className="my-5 p-5">
-        <h1 className="header">SMURF VILLAGE</h1>
-        <SmurfList />
-        <SmurfForm />
-        <div type="button" onClick={() => lock.show()}>
-          Log In
+    if (this.isAuthenticated()) {
+      return (
+        <Container className="my-5 p-5">
+          <h1 className="header">SMURF VILLAGE</h1>
+          <SmurfList />
+          <SmurfForm />
+        </Container>
+      );
+    }
+    else {
+      return (
+        <div>
+          <h1>You are not logged in</h1>
+          <div type="button" onClick={() => lock.show()}>
+            Log In
+          </div>
         </div>
-      </Container>
-    );
+      )
+    }
+  }
+
+  isAuthenticated() {
+    // Check whether the current time is past the
+    // Access Token's expiry time
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
   }
 
   componentDidMount() {
     this.props.getSmurfs();
   }
 }
+
 
 export default connect(
   null,
