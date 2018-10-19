@@ -5,6 +5,7 @@ import SmurfForm from "./SmurfForm";
 import { connect } from "react-redux";
 import { getSmurfs } from "../actions";
 import { Container } from "reactstrap";
+import { Auth0Lock } from 'auth0-lock';
 
 /*
  to wire this component up you're going to need a few things.
@@ -12,6 +13,11 @@ import { Container } from "reactstrap";
  Just remember, `how do I connect my components to redux?`
  `How do I ensure that my component links the state to props?`
  */
+
+const lock = new Auth0Lock(
+  process.env.REACT_APP_CLIENT_ID,
+  process.env.REACT_APP_DOMAIN_URL
+);
 
 class App extends Component {
   render() {
@@ -21,6 +27,9 @@ class App extends Component {
         <h1 className="header">SMURF VILLAGE</h1>
         <SmurfList />
         <SmurfForm />
+        <div type="button" onClick={() => lock.show()}>
+          Log In
+        </div>
       </Container>
     );
   }
