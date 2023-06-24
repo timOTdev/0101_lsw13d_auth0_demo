@@ -1,4 +1,6 @@
-# Setting up Auth0
+# 0101_lsw13d_auth0_demo
+
+## Setting up Auth0
 
 ## Resources
 
